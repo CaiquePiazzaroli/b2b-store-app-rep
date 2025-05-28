@@ -1,16 +1,17 @@
 //Importa o módulo express
 const express = require('express')
 
+//Importa os middlewares
+const indexRouter = require('./routes/index.js');
+
 //Cria um app
 const app = express()
 
 //Define a porta 
-const port = 3000
+const port = 3001
 
-//Define um endpoint que retorna uma mensagem
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+//Utilizando os middlewares
+app.use('/home', indexRouter);
 
 //Roda o servidor
 app.listen(port, () => {
