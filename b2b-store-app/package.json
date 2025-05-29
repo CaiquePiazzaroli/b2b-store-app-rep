@@ -10,17 +10,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.2"
+    "sequelize": "^6.37.7",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "express": "^5.1.0",
-    "typescript": "^5",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4"
+    "express": "^5.1.0",
+    "sequelize-cli": "^6.6.3",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
