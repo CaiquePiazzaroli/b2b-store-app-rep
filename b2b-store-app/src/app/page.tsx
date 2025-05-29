@@ -13,7 +13,6 @@ export default async function Home() {
   return (
     <div>
       <h1>{data.name}</h1>
- 
     </div>
   );
 }

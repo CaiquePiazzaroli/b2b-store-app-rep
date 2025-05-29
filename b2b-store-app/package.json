@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "startserver": "node ./b2b-api/app.js",
+    "startserver": "node ./api-module/app.js",
     "lint": "next lint"
   },
   "dependencies": {

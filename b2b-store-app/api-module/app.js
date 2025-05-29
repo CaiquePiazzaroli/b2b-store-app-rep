@@ -2,7 +2,7 @@
 const express = require('express')
 
 //Importa os middlewares
-const indexRouter = require('./routes/index.js');
+const usersRouter = require('./routes/users.js');
 
 //Cria um app
 const app = express()
@@ -10,8 +10,8 @@ const app = express()
 //Define a porta 
 const port = 3001
 
-//Utilizando os middlewares
-app.use('/home', indexRouter);
+//Rotas: utilizando os middlewares
+app.use('/users', usersRouter);
 
 //Roda o servidor
 app.listen(port, () => {
