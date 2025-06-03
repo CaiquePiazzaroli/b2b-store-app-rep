@@ -2,35 +2,41 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('CompraItemRelacao', {
+    await queryInterface.createTable('UserData', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idCompra: {
-        type: Sequelize.UUID,
+
+      legal_name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        references: {
-          model: "Compra",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
-      },
-      idItem: {
-        type: Sequelize.UUID,
-        references: {
-          model: "Item",
-          key: "id",
-        },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
       },
 
-      quantidade: {
-        type: Sequelize.INTEGER
+      trade_name: {
+        type: Sequelize.STRING
+      },
+
+      cnpj: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
 
       // createdAt: {
@@ -43,7 +49,8 @@ module.exports = {
       // }
     });
   },
+
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('CompraItemRelacao');
+    await queryInterface.dropTable('UserData');
   }
 };

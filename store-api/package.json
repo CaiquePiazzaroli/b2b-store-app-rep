@@ -2,6 +2,7 @@
   "name": "store-api",
   "version": "1.0.0",
   "main": "app.js",
+  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startserver": "node ./app.js"
@@ -10,9 +11,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "jsonwebtoken": "^9.0.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
-  }, 
+  },
   "devDependencies": {
     "express": "^5.1.0",
     "sequelize-cli": "^6.6.3"

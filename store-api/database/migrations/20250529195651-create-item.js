@@ -9,15 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      tipo: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      descricao: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      valor: {
+      value: {
         type: Sequelize.FLOAT,
         allowNull: false,
       },

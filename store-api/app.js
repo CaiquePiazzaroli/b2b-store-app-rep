@@ -1,5 +1,5 @@
 //Importa o módulo express
-const express = require('express')
+const express = require('express');
 
 //Importa os middlewares
 const usersRouter = require('./routes/users.js');
