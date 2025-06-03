@@ -1,6 +1,6 @@
 
 async function getData() {
-  const res = await fetch('http://localhost:3001/home/usuario/6', { cache: 'no-store' });
+  const res = await fetch('http://localhost:3001/users/1', { cache: 'no-store' });
   if (!res.ok) {
     throw new Error('Falha ao buscar dados');
   }
