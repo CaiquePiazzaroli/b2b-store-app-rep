@@ -2,21 +2,23 @@
   "name": "store-api",
   "version": "1.0.0",
   "main": "app.js",
-  
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "startserver": "node ./app.js"
+    "startserver": "nodemon ./app.js"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
     "sequelize": "^6.37.7",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
+    "body-parser": "^2.2.0",
     "express": "^5.1.0",
+    "nodemon": "^3.1.10",
     "sequelize-cli": "^6.6.3"
   }
 }
