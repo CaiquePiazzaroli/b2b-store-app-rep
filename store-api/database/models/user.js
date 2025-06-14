@@ -1,7 +1,9 @@
 'use strict';
+
 const {
   Model
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -11,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Order, {
+        foreignKey: 'id_user',
+        as: 'orders'
+      });
     }
   }
   User.init({
@@ -23,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'User',
-    freezeTableName: true, //Imprede de que o sequelize pluralize o nome da tabela
+    freezeTableName: true, //Impede de que o sequelize pluralize o nome da tabela
     timestamps: false       // <- desativa createdAt e updatedAt
   });
   return User;

@@ -8,7 +8,6 @@ export default function Home() {
 
   //Sincroniza o componente Home com um componente externo (API)
   useEffect(() => {
-
     //Função asíncrona para buscar dados
     async function fetchUsers() {
       try {
@@ -19,7 +18,7 @@ export default function Home() {
         console.error("Erro ao buscar usuários:", error);
       }
     }
-
+    
     fetchUsers();
   }, [users]); //[users] - Atualiza a tela toda vez que users é alterado
 

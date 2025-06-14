@@ -1,37 +1,34 @@
 'use strict';
 const {
-Model
+  Model
 } = require('sequelize');
-
 module.exports = (sequelize, DataTypes) => {
-  class Order extends Model {
+  class Item extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Order.belongsTo(models.User, {
-        foreignKey:'id_user',
-        as:'user',
-      });
-      Order.belongsToMany(models.Item, {
+      // define association here
+      Item.belongsToMany(models.Order, {
         through: 'item_order',
-        foreignKey: 'order_id',
-        otherKey: 'item_id',
-        as: 'items' // Alias opcional, mas recomendado
+        foreignKey: 'item_id',
+        otherKey: 'order_id',
+        as: 'orders' // Alias opcional
       });
     }
   }
-  Order.init({
-    id_user: DataTypes.STRING,
-    order_date: DataTypes.DATE,
-    total: DataTypes.FLOAT
+  Item.init({
+    type: DataTypes.STRING,
+    description: DataTypes.STRING,
+    imagePath: DataTypes.STRING,
+    value: DataTypes.FLOAT
   }, {
     sequelize,
-    modelName: 'Order',
+    modelName: 'Item',
     freezeTableName: true, //Impede de que o sequelize pluralize o nome da tabela
     timestamps: false       // <- desativa createdAt e updatedAt
   });
-  return Order;
+  return Item;
 };

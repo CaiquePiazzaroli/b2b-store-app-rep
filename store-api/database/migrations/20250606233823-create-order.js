@@ -13,12 +13,11 @@ module.exports = {
         type: Sequelize.STRING,
         //A prorpiedade references abaixo define uma relação de uma foreign key com a tabela user
         references: {
-          model: {
-            tableName: 'User',
-            schema: 'schema',
-          },
+          model: 'User',
           key: 'id',
-        }
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       order_date: {
         type: Sequelize.DATE
