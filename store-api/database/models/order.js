@@ -3,7 +3,6 @@ const {
 Model,
 } = require('sequelize');
 
-
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
     /**
@@ -17,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
         as:'user',
       });
       Order.belongsToMany(models.Item, {
-        through: models.ItemOrder,
+        through: 'itemOrder',
         foreignKey: 'order_id',
         otherKey: 'item_id',
         as: 'items'

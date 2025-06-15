@@ -1,61 +1,48 @@
-const path = require("path");
-const { Sequelize } = require("sequelize");
-const Order = require("../database/models/order.js");
-const Item = require("../database/models/itens.js"); 
-const ItemOrder = require("../database/models/itemOrder.js");
+//Ajuda a trabalhar com operações de consulta como: Select * WHERE name LIKE "xxx"
 const { Op } = require('sequelize');
 
-//Cria uma instância do banco de dados
-const sequelize = new Sequelize({
-  dialect: "sqlite",
-  storage: path.resolve(__dirname, "../database/db.sqlite"), //__dirname variavel global que mostra a localização completa do arquivo atual
-});
+//Importa db da pasta módels do arquivo index.js
+const db = require("../database/models");
 
-//Instancia o model passando a conexao do banco e o DataTypes
-const OrderModel = Order(sequelize, Sequelize.DataTypes);
-const ItemModel = Item(sequelize, Sequelize.DataTypes);
-const ItemOrderModel = ItemOrder(sequelize, Sequelize.DataTypes);
+//Importa os modelos do banco de dados, isso é importante para que as consultas funcionem bem
+const { Order, Item, ItemOrder } = db;
 
-//Exportações
 module.exports = {
+
+  //Retorna todas as Orders
   getAllOrders: async () => {
     try {
-      //Tenta se autenticar
-      await sequelize.authenticate();
-
-      //Busca no banco
-      const allOrders = await OrderModel.findAll();
-
-      //Retorna os usuarios
+      const allOrders = await Order.findAll();
       return allOrders;
     } catch (err) {
       throw err;
     }
   },
 
+  //Retorna uma order pelo id
   getOrderById: async (id) => {
-    //Realiza uma busca por id
     try {
-      //Tenta se autenticar
-      await sequelize.authenticate();
-
-      //Busca no banco
-      const orderSelectedById = await OrderModel.findByPk(id, {
-      include: [
-        {
-          model: ItemModel,
-          as:'items',
-          through: {
-            attributes: ['quantity'], // Traz a quantidade da tabela ItemOrder
+      const orderSelectedById = await Order.findByPk(id, {
+        //Isso serve para que ele retorne todos os itens do pedido
+        // na tabela Item
+        include: [
+          {
+            model: Item,
+            as: 'items', // Usa o alias definido na associação (hasMany ou belongsToMany)
+            through: {
+              attributes: ['quantity'], // traz apenas o campo 'quantity' da tabela ItemOrder
+            },
+            // Quais campos desejo trazer da tabela Item
+            attributes: ['id', 'type', 'description', 'imagePath', 'value'],
           },
-          attributes: ['id', 'type', 'description', 'value'], // Traz os dados do item
-        }
-      ]
-    });
+        ],
+      });
 
-      if(orderSelectedById === null) throw new Error("Pedidos de venda não encontrado!");
+      //Retorna um erro caso o pedido nao exista
+      if (!orderSelectedById) throw new Error("Pedido não encontrado!");
 
-      return orderSelectedById; //Retorna o pedido pelo nome
+      //Retorna o pedido
+      return orderSelectedById;
     } catch (err) {
       throw err;
     }
@@ -63,76 +50,68 @@ module.exports = {
 
   getOrderByUserId: async (userId) => {
     try {
-      //Tenta se autenticar
-      await sequelize.authenticate();
-
-      //Busca no banco
-      const orderSelectedById = await OrderModel.findAll({
+      const orderSelectedById = await Order.findAll({
         where: {
           id_user: {
-            [Op.eq]: userId //Busca todos os pedidos de um usuario especifico
+            [Op.eq]: userId,
           },
         },
       });
 
-      return orderSelectedById; //Retorna todos os pedidos do usuario
+      return orderSelectedById;
     } catch (err) {
       throw err;
     }
   },
 
   createOrder: async (orderObject) => {
-    //gpt 
-    const transaction = await sequelize.transaction();
+    // Inicia uma transação no banco de dados
+    const transaction = await db.sequelize.transaction();
+
     try {
-      //Tenta se autenticar
-      await sequelize.authenticate();
+      //Cria no banco um pedido novo a partir do objeto orderObjetct
+      const newOrder = await Order.create(
+        {
+          id_user: orderObject.id_user,
+          order_date: orderObject.order_date,
+          total: orderObject.total,
+        },
+        { transaction }
+      );
 
-      //Exibe uma mensagem de sucesso
-      console.log("Connection has been established successfully.");
-
-      //Criando e inserindo um novo usuário no banco
-      const newOrder = await OrderModel.create({
-        id_user: orderObject.id_user,
-        order_date: orderObject.order_date,
-        total: orderObject.total,
-      }, { transaction });
-
-      // Insere os itens na tabela ItemOrder
-      const itemsToInsert = orderObject.items.map(item => ({
+      //Prepara o array de produtos do pedido para serem adicionados no banco
+      const itemsToInsert = orderObject.items.map((item) => ({
         order_id: newOrder.id,
         item_id: item.id_item,
         quantity: item.quantity,
       }));
 
-      await ItemOrderModel.bulkCreate(itemsToInsert, { transaction });
+      // Insere todos os itens do pedido na tabela 'ItemOrder' de uma só vez
+      await ItemOrder.bulkCreate(itemsToInsert, { transaction });
 
+      //Salva no banco
       await transaction.commit();
 
       return newOrder.toJSON();
     } catch (err) {
+      await transaction.rollback();
       throw err;
     }
   },
-  
-  deleteOrderById: async (id) => {
-    //Realiza delete por id
-    try {
-      //Tenta se autenticar
-      await sequelize.authenticate();
 
-      //Deleta no banco
-      const orderDeletedById = await OrderModel.destroy({
+  deleteOrderById: async (id) => {
+    try {
+      const orderDeletedById = await Order.destroy({
         where: {
           id: {
-            [Op.eq]: id //Deleta apenas o valor do id equivalente
+            [Op.eq]: id,
           },
         },
       });
 
-      return orderDeletedById; //Retorna o usuario pelo nome
+      return orderDeletedById;
     } catch (err) {
       throw err;
     }
-  }
+  },
 };

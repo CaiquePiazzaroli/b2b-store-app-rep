@@ -13,8 +13,8 @@ module.exports = {
         type: Sequelize.STRING,
         //A prorpiedade references abaixo define uma relação de uma foreign key com a tabela user
         references: {
-          model: 'User',
-          key: 'id',
+          model: 'User', //Model usuarios
+          key: 'id',  //Nome da coluna refenciada na tabela usuarios
         },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'

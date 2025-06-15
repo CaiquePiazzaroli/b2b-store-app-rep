@@ -34,7 +34,7 @@ module.exports = {
 
   getItemById: async (req, res, idItem) => {
     try {
-      const query = await orderService.getItemById(idItem);
+      const query = await itemService.getItemById(idItem);
       //Executa se sucesso
       res.status(200).json(query)
     } catch (err) {
