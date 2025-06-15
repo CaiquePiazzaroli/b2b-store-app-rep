@@ -1,7 +1,8 @@
 const path = require("path");
 const { Sequelize } = require("sequelize");
 const Order = require("../database/models/order.js");
-const ItemOrder = require("../database/models/item_order.js");
+const Item = require("../database/models/itens.js"); 
+const ItemOrder = require("../database/models/itemOrder.js");
 const { Op } = require('sequelize');
 
 //Cria uma instância do banco de dados
@@ -12,7 +13,8 @@ const sequelize = new Sequelize({
 
 //Instancia o model passando a conexao do banco e o DataTypes
 const OrderModel = Order(sequelize, Sequelize.DataTypes);
-const ItemModel = ItemOrder(sequelize, Sequelize.DataTypes);
+const ItemModel = Item(sequelize, Sequelize.DataTypes);
+const ItemOrderModel = ItemOrder(sequelize, Sequelize.DataTypes);
 
 //Exportações
 module.exports = {
@@ -38,7 +40,18 @@ module.exports = {
       await sequelize.authenticate();
 
       //Busca no banco
-      const orderSelectedById = await OrderModel.findByPk(id);
+      const orderSelectedById = await OrderModel.findByPk(id, {
+      include: [
+        {
+          model: ItemModel,
+          as:'items',
+          through: {
+            attributes: ['quantity'], // Traz a quantidade da tabela ItemOrder
+          },
+          attributes: ['id', 'type', 'description', 'value'], // Traz os dados do item
+        }
+      ]
+    });
 
       if(orderSelectedById === null) throw new Error("Pedidos de venda não encontrado!");
 
@@ -69,6 +82,8 @@ module.exports = {
   },
 
   createOrder: async (orderObject) => {
+    //gpt 
+    const transaction = await sequelize.transaction();
     try {
       //Tenta se autenticar
       await sequelize.authenticate();
@@ -81,7 +96,18 @@ module.exports = {
         id_user: orderObject.id_user,
         order_date: orderObject.order_date,
         total: orderObject.total,
-      });
+      }, { transaction });
+
+      // Insere os itens na tabela ItemOrder
+      const itemsToInsert = orderObject.items.map(item => ({
+        order_id: newOrder.id,
+        item_id: item.id_item,
+        quantity: item.quantity,
+      }));
+
+      await ItemOrderModel.bulkCreate(itemsToInsert, { transaction });
+
+      await transaction.commit();
 
       return newOrder.toJSON();
     } catch (err) {

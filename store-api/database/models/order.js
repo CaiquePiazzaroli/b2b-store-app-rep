@@ -1,7 +1,8 @@
 'use strict';
 const {
-Model
+Model,
 } = require('sequelize');
+
 
 module.exports = (sequelize, DataTypes) => {
   class Order extends Model {
@@ -16,10 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         as:'user',
       });
       Order.belongsToMany(models.Item, {
-        through: 'item_order',
+        through: models.ItemOrder,
         foreignKey: 'order_id',
         otherKey: 'item_id',
-        as: 'items' // Alias opcional, mas recomendado
+        as: 'items'
       });
     }
   }
