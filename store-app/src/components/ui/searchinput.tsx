@@ -6,13 +6,12 @@ type searchinput = {
 }
 
 export default function SearchInput({placeholder} : searchinput) {
-
+    
     //Debounce otimiza a busca
     const handleSearch = useDebouncedCallback((value: string) => {
         console.log(value);
     }, 300)
 
-    
     return (
     <div className="flex-1 mx-6">
         <div className="relative">

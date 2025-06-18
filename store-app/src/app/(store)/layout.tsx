@@ -1,7 +1,6 @@
 import TopNav from "@/components/ui/topNav";
-import "./globals.css";
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -9,6 +8,7 @@ export default function RootLayout({
   return (
     <html lang="pt-br">
       <body>
+        <TopNav/>
         {children}
       </body>
     </html>
