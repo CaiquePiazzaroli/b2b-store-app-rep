@@ -1,40 +1,43 @@
 "use client";
 
+import Item from "@/components/ui/item";
 import { useEffect, useState } from "react";
 
+type ItemType = {
+  id: number;
+  type: string;
+  description: string;
+  imagePath: string;
+  value: number;
+};
+
 export default function Home() {
-  const [users, setUsers] = useState([]);
-  const urlUsers = "http://localhost:8080/users";
 
-  //Sincroniza o componente Home com um componente externo (API)
+  //Tipando o estado
+  const [itens, setItens] = useState<ItemType[]>([]);
+
+  //Url de consulta de itens
+  const urlItens = "http://localhost:8080/itens";
+  
+  //Popula o esto itens com os itens do banco de dados
   useEffect(() => {
-    //Função asíncrona para buscar dados
-    async function fetchUsers() {
-      try {
-        const response = await fetch(urlUsers);
-        const data = await response.json();
-        setUsers(data);
-      } catch (error) {
-        console.error("Erro ao buscar usuários:", error);
-      }
-    }
-    
-    fetchUsers();
-  }, [users]); //[users] - Atualiza a tela toda vez que users é alterado
+    fetch(urlItens)
+    .then(response => response.json())
+    .then(json => setItens(json))
+    .catch(e => console.log(e));
+  }, []);
 
+  //Componente
   return (
-    <div>
-      <h1>Usuários do sistema</h1>
-      <div>
-        {users.map((user: any) => (
-          <div key={user.id}>
-            <p>Legal name: {user.legal_name}</p>
-            <p>CNPJ: {user.cnpj}</p>
-            <p>Email: {user.email}</p>
-            <hr />
-          </div>
-        ))}
-      </div>
-    </div>
+    <main className="max-w-10/12 m-auto">
+      <h1>Home de produtos</h1>
+      <ul className="flex gap-4">
+        {itens.map(item => {
+          return <li key={item.id}>
+            <Item id={item.id} type={item.type} description={item.description} imagePath={item.imagePath} value={item.value} />
+          </li>
+        })}
+      </ul>
+    </main>
   );
 }
