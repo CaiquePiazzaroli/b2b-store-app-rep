@@ -1,5 +1,6 @@
 import Image from "next/image";
 import * as React from 'react'
+import ButtonAddCart from "@/components/ui/buttonAddCart";
 type Params = {
   //params é o argumento que o next reconheçe e é obrigatório para pegar os parametros da url
   params: {
@@ -41,9 +42,7 @@ export default async function ItemPage({ params }: Params) {
           <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
             Buy
           </button>
-          <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50">
-            Add to cart
-          </button>
+          <ButtonAddCart id={ id }/>
         </div>
       </div>
     </div>
