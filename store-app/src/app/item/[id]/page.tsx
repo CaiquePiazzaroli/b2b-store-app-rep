@@ -41,7 +41,7 @@ export default async function ItemPage({ params }: Params) {
           <button className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">
             Buy
           </button>
-          <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50" onChange={}>
+          <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50">
             Add to cart
           </button>
         </div>
