@@ -6,11 +6,9 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-br">
-      <body>
-        <TopNav/>
+      <main>
+        <TopNav client={true}/>
         {children}
-      </body>
-    </html>
+      </main>
   );
 }

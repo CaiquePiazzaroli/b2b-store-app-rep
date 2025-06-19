@@ -1,5 +1,6 @@
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 const db = require("../database/models");
+const { updateItem } = require("../controller/itemController");
 
 const { Item } = db;
 
@@ -7,7 +8,6 @@ const { Item } = db;
 module.exports = {
   getAllItens: async () => {
     try {
-
       //Busca no banco
       const allItens = await Item.findAll();
 
@@ -24,10 +24,10 @@ module.exports = {
       //Busca no banco
       const ItemSelectedByType = await Item.findAll({
         where: {
-            type: {
-                [Op.like]: `%${type}%`
-            }
-        }
+          type: {
+            [Op.like]: `%${type}%`,
+          },
+        },
       });
 
       return ItemSelectedByType; //Retorna os itens do tipo buscado
@@ -41,7 +41,7 @@ module.exports = {
       //Busca no banco
       const itemSelectedById = await Item.findByPk(itemId);
 
-      if(itemSelectedById === null) throw new Error("O item não existe");
+      if (itemSelectedById === null) throw new Error("O item não existe");
 
       return itemSelectedById; //Retorna apenas um item pelo id
     } catch (err) {
@@ -53,16 +53,42 @@ module.exports = {
     try {
       //Exibe uma mensagem de sucesso
       console.log("Connection has been established successfully.");
-
+      console.log(itemObject);
       //Criando e inserindo um novo item no banco
       const newItem = await Item.create({
         type: itemObject.type,
         description: itemObject.description,
         imagePath: itemObject.imagePath,
-        value: itemObject.value,
+        value: Number(itemObject.value),
       });
 
       return newItem.toJSON();
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  updateItem: async (itemObject) => {
+    try {
+      const [rowsUpdated] = await Item.update(
+        {
+          type: itemObject.type,
+          description: itemObject.description,
+          imagePath: itemObject.imagePath,
+          value: Number(itemObject.value),
+        },
+        {
+          where: { id: itemObject.id },
+        }
+      );
+
+      if (rowsUpdated === 0) {
+        throw new Error("Item não encontrado ou nenhum dado alterado");
+      }
+
+      // Buscar o item atualizado para retornar
+      const updatedItem = await Item.findByPk(itemObject.id);
+      return updatedItem.toJSON();
     } catch (err) {
       throw err;
     }
@@ -75,7 +101,7 @@ module.exports = {
       const itemDeletedById = await Item.destroy({
         where: {
           id: {
-            [Op.eq]: id //Deleta apenas o valor do id equivalente
+            [Op.eq]: id, //Deleta apenas o valor do id equivalente
           },
         },
       });
@@ -84,5 +110,5 @@ module.exports = {
     } catch (err) {
       throw err;
     }
-  }
+  },
 };

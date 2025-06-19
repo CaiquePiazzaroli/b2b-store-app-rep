@@ -21,8 +21,13 @@ router.get("/:id/id", function (req, res) {
 });
 
 //POST ITENS
-  router.post("/", function (req, res) {
+router.post("/", function (req, res) {
     itemController.createItem(req, res);
+});
+
+//POST ITENS
+router.put("/", function (req, res) {
+    itemController.updateItem(req, res);
 });
 
 //DELETE ITEM BY ID

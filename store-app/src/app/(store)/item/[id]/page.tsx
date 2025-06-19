@@ -15,7 +15,7 @@ async function getItemById(id: string) {
     throw new Error("Failed to fetch item");
   }
     return res.json();
-  }
+}
 
 
 export default async function ItemPage({ params }: Params) {
