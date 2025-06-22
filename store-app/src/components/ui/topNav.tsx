@@ -83,12 +83,12 @@ function AdminNav() {
           </Link>
             
           <div className="h-6 w-px bg-gray-300" />
-
+        <Link href='/admin/create_user'>
           <div className="flex items-center gap-2 cursor-pointer">
             <PlusCircleIcon className="h-5 w-5 text-blue-500" />
             <span className="text-sm text-gray-700">Criar novo Usuario</span>
           </div>
-
+        </Link>
           <div className="flex items-center gap-2 cursor-pointer">
             <UserIcon className="h-5 w-5 text-blue-500" />
             <span className="text-sm text-gray-700">Listar Usuarios</span>
