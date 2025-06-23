@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 type ItemGeneralProps = {
-  client: boolean,
-  id: number,
+  client: boolean;
+  id: number;
   type: string;
   description: string;
   imagePath: string;
@@ -11,57 +11,104 @@ type ItemGeneralProps = {
 };
 
 type ItemProps = {
-  id: number,
+  id: number;
   type: string;
   description: string;
   imagePath: string;
   value: number;
 };
 
-
-function ClientItem({id, type, description, imagePath, value }: ItemProps) {
-  return(
-    <Link href={`item/${id}`}>
-      <div className="w-[240px] h-[320px] border rounded-md border-gray-100 flex flex-col justify-center p-6">
-        <Image src={imagePath} width={160} height={100} alt="Item for sale" className="m-auto bg-amber-50"/>
-        <h2 className="font-bold">{type}</h2>
-        <hr/>
-        <span>
-          <p className="text-[16px] py-2 text-green-400 font-bold">R${value}</p>
-        </span>
+function ClientItem({ id, type, description, imagePath, value }: ItemProps) {
+  return (
+    <Link href={`item/${id}`} className="block">
+      <div className="w-[300px] h-[400px] bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+        <div className="w-full flex justify-center">
+          <Image
+            src={imagePath}
+            alt={`Imagem do produto ${type}`}
+            width={160}
+            height={100}
+          />
+        </div>
+        <div className="flex flex-col flex-grow p-4">
+          <h3
+            className="text-lg font-semibold text-gray-900 truncate"
+            title={type}
+          >
+            {type}
+          </h3>
+          <p className="text-sm text-gray-600 mt-1 line-clamp-3">
+            {description}
+          </p>
+          <div className="mt-auto pt-4">
+            <span className="inline-block bg-green-100 text-green-700 font-bold px-3 py-1 rounded-full text-lg">
+              R$ {value.toFixed(2)}
+            </span>
+          </div>
+        </div>
       </div>
     </Link>
   );
 }
 
-function AdminItem({id, type, description, imagePath, value }: ItemProps) {
-  return(
-      <div className="flex max-h-[250px] m-auto">
-        <Image src={imagePath} width={160} height={100} alt="Item for sale" className="m-auto bg-amber-50"/>
-        <div className="grow">
-          <h2 className="font-bold">{type}</h2>
-          <p>
-            {description}
+function AdminItem({ id, type, description, imagePath, value }: ItemProps) {
+  return (
+    <div className="flex border mb-6 border-gray-200 rounded-lg shadow-md overflow-hidden bg-white hover:shadow-lg transition-shadow duration-300 p-4 space-x-6">
+      <Image
+        src={imagePath}
+        width={160}
+        height={120}
+        alt={`Imagem do item ${type}`}
+        className="rounded-md bg-amber-50 object-cover"
+      />
+      <div className="flex flex-col justify-between grow">
+        <div>
+          <h2 className="text-xl font-bold text-gray-800">{type}</h2>
+          <p className="mt-2 text-gray-700 line-clamp-4">{description}</p>
+        </div>
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-green-600 font-bold text-lg">
+            R$ {value.toFixed(2)}
           </p>
-          <span>
-            <p className="text-[16px] py-2 text-green-400 font-bold">R${value}</p>
-          </span>
-          <Link href={`/admin/update_itens/${id}`}>
+          <Link
+            href={`/admin/update_itens/${id}`}
+            className="text-blue-600 hover:underline font-medium"
+          >
             Editar item
           </Link>
         </div>
       </div>
+    </div>
   );
 }
 
-
-export default function Item({client, id, type, description, imagePath, value }: ItemGeneralProps) {
+export default function Item({
+  client,
+  id,
+  type,
+  description,
+  imagePath,
+  value,
+}: ItemGeneralProps) {
   return (
     <>
-      {client == true ? 
-      (<ClientItem id={id} type={type} description={description} imagePath={imagePath} value={value}/>):
-       (<AdminItem id={id} type={type} description={description} imagePath={imagePath} value={value}/>)
-      }
+      {client == true ? (
+        <ClientItem
+          id={id}
+          type={type}
+          description={description}
+          imagePath={imagePath}
+          value={value}
+        />
+      ) : (
+        <AdminItem
+          id={id}
+          type={type}
+          description={description}
+          imagePath={imagePath}
+          value={value}
+        />
+      )}
     </>
   );
-} 
+}

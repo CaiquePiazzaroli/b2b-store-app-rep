@@ -8,11 +8,11 @@ export default async function Page({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
-  const { type } = await searchParams;
+  const { query } = await searchParams;
 
   //Veifica se tem a query type
-  const url = type
-    ? `http://localhost:8080/itens/${type}/type`
+  const url = query
+    ? `http://localhost:8080/itens/${query}/type`
     : "http://localhost:8080/itens";
 
   const data = await fetch(url)
@@ -25,7 +25,7 @@ export default async function Page({
       <section className="flex p-6 gap-2">
         <div className="w-[20%] border rounded-md h-fit pb-6 pt-3 px-3">
           <h1 className="px-2 font-bold border-b mb-6">Buscar produtos</h1>
-          <SearchInput client={false} placeholder="Buscar produtos" />
+          <SearchInput client={false} placeholder="Buscar produtos" searchFor="itens"/>
         </div>
         <ul className="w-[70%]">
           {data.map((item: any) => {

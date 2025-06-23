@@ -25,6 +25,11 @@ router.get("/:id/id", function (req, res) {
     userController.createuser(req, res);
 });
 
+//POST ITENS
+router.put("/", function (req, res) {
+    userController.updateUser(req, res);
+});
+
 //DELETE USER BY ID
 router.delete("/:id/id", (req, res) => {
   const id = Number(req.params.id);

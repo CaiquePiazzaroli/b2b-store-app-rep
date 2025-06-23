@@ -7,11 +7,11 @@ export default async function Home({
 }) {
 
   //Busca a query type na url
-  const { type } = await searchParams;
+  const { query } = await searchParams;
 
   //Veifica se existe a query type
-  const url = type
-    ? `http://localhost:8080/itens/${type}/type`
+  const url = query
+    ? `http://localhost:8080/itens/${query}/type`
     : "http://localhost:8080/itens";
 
   //Chama a api e faz uma busca

@@ -97,5 +97,28 @@ module.exports = {
     } catch (err) {
       throw err;
     }
-  }
+  },
+
+  updateUser: async (userObject) => {
+    try {
+      //Verifica se legal_name está em branco ou é nulo
+      if (userObject.legal_name == null || userObject.legal_name == "") {
+        throw error("legal_name nulo ou em branco");
+      }
+
+      //Criando e inserindo um novo usuário no banco
+      const newUser = await User.create({
+        legal_name: userObject.legal_name,
+        trade_name: userObject.trade_name,
+        cnpj: userObject.cnpj,
+        username: userObject.username,
+        password: userObject.password,
+        email: userObject.email,
+      });
+
+      return newUser.toJSON();
+    } catch (err) {
+      throw err;
+    }
+  },
 };

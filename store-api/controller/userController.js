@@ -17,6 +17,22 @@ module.exports = {
       });
     }
   },
+  updateUser: async (req, res) => {
+    try {
+      //Tenta salvar no banco de dados - Pode retornar um erro ou um json de sucesso
+      const query = await userService.updateUser(req.body);
+
+      //Executa se sucesso
+      res.status(201).json(query);
+    } catch (err) {
+      //Executa se erro
+      res.status(400).json({
+        message: "Error",
+        details: err.message || err, 
+      });
+    }
+  },
+  
   getAllUsers: async (req, res) => {
     try {
       const query = await userService.getAllUsers();

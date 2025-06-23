@@ -19,7 +19,7 @@ function ClientNav() {
         </Link>
 
         {/* Search */}
-        <SearchInput client={true} placeholder="Buscar produtos" />
+        <SearchInput client={true} placeholder="Buscar produtos" searchFor="itens"/>
 
         {/* User and Cart */}
         <div className="flex items-center gap-6">
@@ -78,7 +78,7 @@ function AdminNav() {
           <Link href='/admin/list_itens'>
             <div className="flex items-center gap-2 cursor-pointer">
               <TvIcon className="h-5 w-5 text-blue-500" />
-              <span className="text-sm text-gray-700">Listar produtos</span>
+              <span className="text-sm text-gray-700">Gerenciar produtos</span>
             </div>
           </Link>
             
@@ -89,10 +89,12 @@ function AdminNav() {
             <span className="text-sm text-gray-700">Criar novo Usuario</span>
           </div>
         </Link>
+        <Link href={'http://localhost:3000/admin/list_users'}>
           <div className="flex items-center gap-2 cursor-pointer">
             <UserIcon className="h-5 w-5 text-blue-500" />
-            <span className="text-sm text-gray-700">Listar Usuarios</span>
+            <span className="text-sm text-gray-700">Gerenciar Usuarios</span>
           </div>
+        </Link>
 
           <div className="h-6 w-px grow"></div>
 
