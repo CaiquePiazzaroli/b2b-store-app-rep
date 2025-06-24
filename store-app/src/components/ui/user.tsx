@@ -20,7 +20,7 @@ export default function UserCard({
   email,
 }: User) {
   return (
-    <div className="w-md mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
+    <div className="mx-auto bg-white rounded-lg shadow-md border border-gray-200 p-6 hover:shadow-lg transition-shadow duration-300">
       <h2 className="text-xl font-semibold text-gray-800">{legal_name}</h2>
       <p className="text-sm text-gray-500 mb-4 italic">{trade_name}</p>
       <div className="text-gray-700 space-y-1 mb-4">
@@ -37,7 +37,7 @@ export default function UserCard({
 
       <Link
         href={`/admin/update_users/${id}`}
-        className="inline-block bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded transition"
+        className="text-blue-600 hover:underline font-medium"
       >
         Editar Usuário
       </Link>

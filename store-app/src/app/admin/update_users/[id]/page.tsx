@@ -202,7 +202,7 @@ export default function UpdateUserPage() {
         <div className="flex gap-4">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50"
           >
             Atualizar Usuário
           </button>
@@ -210,7 +210,7 @@ export default function UpdateUserPage() {
           <button
             type="button"
             onClick={handleDelete}
-            className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+            className="border border-red-500 text-red-600 px-6 py-2 rounded-md hover:bg-red-50"
           >
             Deletar Usuário
           </button>

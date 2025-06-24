@@ -136,8 +136,7 @@ export default function CreateUserPage() {
         <button
           type="submit"
           disabled={loading}
-          className={`bg-blue-600 text-white font-semibold px-6 py-3 rounded transition ${
-            loading ? "opacity-60 cursor-not-allowed" : "hover:bg-blue-700"
+          className={`border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50
           }`}
         >
           {loading ? "Enviando..." : "Criar Usuário"}

@@ -1,6 +1,5 @@
 const { Op } = require("sequelize");
 const db = require("../database/models");
-const { updateItem } = require("../controller/itemController");
 
 const { Item } = db;
 
