@@ -42,24 +42,19 @@ module.exports = {
   },
 
   getUserById: async (id) => {
-    //Realiza uma busca por id
-    try {
-      //Busca no banco
-      const userSelectedById = await User.findAll({
-        where: {
-          id: {
-            [Op.eq]: id //Busca apenas o valor do id equivalente
-          },
-        },
-      });
+  try {
+    const userSelectedById = await User.findOne({
+      where: { id },
+    });
 
-      console.log("Usuario buscado por id" + userSelectedById);
+    console.log("Usuário buscado por ID:", userSelectedById);
 
-      return userSelectedById; //Retorna o usuario pelo nome
-    } catch (err) {
-      throw err;
-    }
-  },
+    return userSelectedById;
+  } catch (err) {
+    console.error("Erro ao buscar usuário por ID:", err);
+    throw err;
+  }
+},
 
   getUserByName: async (legalName) => {
     //Realiza uma busca por legal name de
@@ -101,22 +96,27 @@ module.exports = {
 
   updateUser: async (userObject) => {
     try {
-      //Verifica se legal_name está em branco ou é nulo
-      if (userObject.legal_name == null || userObject.legal_name == "") {
-        throw error("legal_name nulo ou em branco");
+      const [rowsUpdated] = await User.update(
+        {
+          legal_name: userObject.legal_name,
+          trade_name: userObject.trade_name,
+          cnpj: userObject.cnpj,
+          username: userObject.username,
+          password: userObject.password,
+          email: userObject.email,
+        },
+        {
+          where: { id: userObject.id },
+        }
+      );
+
+      if (rowsUpdated === 0) {
+        throw new Error("Usuario não encontrado ou nenhum dado alterado");
       }
 
-      //Criando e inserindo um novo usuário no banco
-      const newUser = await User.create({
-        legal_name: userObject.legal_name,
-        trade_name: userObject.trade_name,
-        cnpj: userObject.cnpj,
-        username: userObject.username,
-        password: userObject.password,
-        email: userObject.email,
-      });
-
-      return newUser.toJSON();
+      // Buscar o item atualizado para retornar
+      const updatedUser = await User.findByPk(userObject.id);
+      return updatedUser.toJSON();
     } catch (err) {
       throw err;
     }
