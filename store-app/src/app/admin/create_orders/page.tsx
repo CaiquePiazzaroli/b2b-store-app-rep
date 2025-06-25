@@ -92,7 +92,7 @@ export default function OrderForm() {
         />
       </label>
 
-      <div className="space-y-2">
+      <div className="space-y-2 border-2 p-6">
         <h3 className="text-xl font-semibold">Itens</h3>
         {items.map((item, index) => (
           <div key={index} className="flex gap-2 items-center">
@@ -115,7 +115,7 @@ export default function OrderForm() {
             <button
               type="button"
               onClick={() => removeItem(index)}
-              className="bg-red-500 text-white px-3 py-1 rounded"
+              className="border border-red-600 text-red-600 px-6 py-2 rounded-md hover:bg-red-50"
             >
               Remover
             </button>
@@ -124,7 +124,7 @@ export default function OrderForm() {
         <button
           type="button"
           onClick={addItem}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="border border-blue-600 text-blue-600 px-6 py-2 rounded-md hover:bg-blue-50"
         >
           Adicionar Item
         </button>
@@ -132,7 +132,7 @@ export default function OrderForm() {
 
       <button
         type="submit"
-        className="bg-green-600 text-white px-6 py-2 rounded mt-4"
+        className="border border-green-600 text-green-600 px-6 py-2 rounded-md hover:bg-green-50"
       >
         Enviar Pedido
       </button>

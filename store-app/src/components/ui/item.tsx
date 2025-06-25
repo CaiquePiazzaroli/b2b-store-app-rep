@@ -21,8 +21,8 @@ type ItemProps = {
 function ClientItem({ id, type, description, imagePath, value }: ItemProps) {
   return (
     <Link href={`item/${id}`} className="block">
-      <div className="w-[300px] h-[400px] bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow duration-300 flex flex-col">
-        <div className="w-full flex justify-center">
+      <div className="w-[300px] h-[400px] p-4 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden cursor-pointer hover:shadow-2xl transition-shadow duration-300 flex flex-col">
+        <div className="w-full flex justify-center grow-1 m-auto">
           <Image
             src={imagePath}
             alt={`Imagem do produto ${type}`}

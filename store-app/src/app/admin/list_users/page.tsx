@@ -1,4 +1,3 @@
-import Item from "@/components/ui/item";
 import SearchInput from "@/components/ui/searchinput";
 import UserCard from "@/components/ui/user";
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
@@ -24,7 +23,7 @@ export default async function Page({
     <main className="max-w-[1200px] w-full mx-auto px-4 sm:px-6 lg:px-8">
       <section className="flex flex-col md:flex-row gap-6 py-6">
         {/* Sidebar de busca */}
-        <aside className="w-full md:w-1/4 border rounded-md p-4">
+        <aside className="w-full md:w-1/4 border rounded-md p-4 h-fit">
           <h1 className="font-bold border-b pb-2 mb-6 text-lg">Buscar Clientes</h1>
           <SearchInput client={false} placeholder="Buscar Clientes" searchFor="users" />
         </aside>
