@@ -25,6 +25,11 @@ router.post("/", function (req, res) {
     orderController.createOrder(req, res);
 });
 
+//PUT ORDER
+router.put("/:id", function (req, res) {
+    orderController.updateOrderById(req, res);
+});
+
 //DELETE ORDER BY ID
 router.delete("/:id/id", (req, res) => {
   const id = Number(req.params.id);

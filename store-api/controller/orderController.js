@@ -59,6 +59,22 @@ module.exports = {
       });
     }
   },
+
+  updateOrderById: async (req, res) => {
+  try {
+    const id = req.params.id;               // pega o id da URL
+    const updatedOrder = req.body;          // corpo do pedido atualizado
+
+    const result = await orderService.updateOrderById(id, updatedOrder);
+
+    res.status(200).json(result);           // 200 para atualização bem sucedida
+  } catch (err) {
+    res.status(400).json({
+      message: "Error",
+      details: err.message || err,
+    });
+  }
+},
   
   deleteOrderById: async (req, res, id) => {
     try {

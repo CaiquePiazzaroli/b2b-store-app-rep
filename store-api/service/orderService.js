@@ -1,5 +1,5 @@
 //Ajuda a trabalhar com operações de consulta como: Select * WHERE name LIKE "xxx"
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 //Importa db da pasta módels do arquivo index.js
 const db = require("../database/models");
@@ -8,13 +8,54 @@ const db = require("../database/models");
 const { Order, Item, ItemOrder } = db;
 
 module.exports = {
-
   //Retorna todas as Orders
   getAllOrders: async () => {
     try {
       const allOrders = await Order.findAll();
       return allOrders;
     } catch (err) {
+      throw err;
+    }
+  },
+
+  updateOrderById: async (id, updatedOrderObject) => {
+    const transaction = await db.sequelize.transaction();
+
+    try {
+      // Verifica se o pedido existe
+      const existingOrder = await Order.findByPk(id, { transaction });
+      if (!existingOrder) throw new Error("Pedido não encontrado!");
+
+      // Atualiza os dados da order
+      await existingOrder.update(
+        {
+          id_user: updatedOrderObject.id_user,
+          order_date: updatedOrderObject.order_date,
+          total: updatedOrderObject.total,
+        },
+        { transaction }
+      );
+
+      // Remove os itens antigos da relação (ItemOrder)
+      await ItemOrder.destroy({
+        where: { order_id: id },
+        transaction,
+      });
+
+      // Insere os novos itens
+      const newItems = updatedOrderObject.items.map((item) => ({
+        order_id: id,
+        item_id: item.id_item,
+        quantity: item.quantity,
+      }));
+
+      await ItemOrder.bulkCreate(newItems, { transaction });
+
+      await transaction.commit();
+
+      return { message: "Pedido atualizado com sucesso." };
+    } catch (err) {
+      await transaction.rollback();
       throw err;
     }
   },
@@ -28,12 +69,12 @@ module.exports = {
         include: [
           {
             model: Item,
-            as: 'items', // Usa o alias definido na associação (hasMany ou belongsToMany)
+            as: "items", // Usa o alias definido na associação (hasMany ou belongsToMany)
             through: {
-              attributes: ['quantity'], // traz apenas o campo 'quantity' da tabela ItemOrder
+              attributes: ["quantity"], // traz apenas o campo 'quantity' da tabela ItemOrder
             },
             // Quais campos desejo trazer da tabela Item
-            attributes: ['id', 'type', 'description', 'imagePath', 'value'],
+            attributes: ["id", "type", "description", "imagePath", "value"],
           },
         ],
       });

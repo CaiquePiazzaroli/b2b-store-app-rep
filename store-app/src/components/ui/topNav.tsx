@@ -7,6 +7,7 @@ import {
   TvIcon,
   Bars3Icon,
   XMarkIcon,
+  CurrencyDollarIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import SearchInput from "./searchinput";
@@ -26,7 +27,11 @@ function ClientNav() {
 
         {/* Search */}
         <div className="hidden md:block w-1/3">
-          <SearchInput client={true} placeholder="Buscar produtos" searchFor="itens"/>
+          <SearchInput
+            client={true}
+            placeholder="Buscar produtos"
+            searchFor="itens"
+          />
         </div>
 
         {/* Botão Menu Mobile */}
@@ -70,7 +75,11 @@ function ClientNav() {
       {/* Itens Mobile */}
       {isOpen && (
         <div className="md:hidden px-6 pb-4 flex flex-col gap-4">
-          <SearchInput client={true} placeholder="Buscar produtos" searchFor="itens"/>
+          <SearchInput
+            client={true}
+            placeholder="Buscar produtos"
+            searchFor="itens"
+          />
 
           <div className="flex items-center gap-2 cursor-pointer">
             <UserIcon className="h-5 w-5 text-blue-500" />
@@ -102,7 +111,7 @@ function AdminNav() {
       <div className="max-w-[1200px] w-full mx-auto flex items-center justify-between px-6 py-4">
         {/* Logo */}
         <Link href={"/"}>
-          <div className="text-2xl font-bold text-blue-600">LOGO</div>
+          <div className="text-2xl font-bold text-blue-600">Eletronix</div>
         </Link>
 
         {/* Botão Menu Mobile */}
@@ -120,13 +129,6 @@ function AdminNav() {
 
         {/* Itens Desktop */}
         <div className="hidden md:flex items-center gap-6">
-          <Link href="/admin/create_itens">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <PlusCircleIcon className="h-5 w-5 text-blue-500" />
-              <span className="text-sm text-gray-700">Criar Produto</span>
-            </div>
-          </Link>
-
           <Link href="/admin/list_itens">
             <div className="flex items-center gap-2 cursor-pointer">
               <TvIcon className="h-5 w-5 text-blue-500" />
@@ -134,17 +136,17 @@ function AdminNav() {
             </div>
           </Link>
 
-          <Link href="/admin/create_user">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <PlusCircleIcon className="h-5 w-5 text-blue-500" />
-              <span className="text-sm text-gray-700">Criar Usuário</span>
-            </div>
-          </Link>
-
           <Link href="/admin/list_users">
             <div className="flex items-center gap-2 cursor-pointer">
               <UserIcon className="h-5 w-5 text-blue-500" />
               <span className="text-sm text-gray-700">Gerenciar Usuários</span>
+            </div>
+          </Link>
+
+          <Link href="/admin/list_orders">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <CurrencyDollarIcon className="h-5 w-5 text-blue-500" />
+              <span className="text-sm text-gray-700">Gerenciar Pedidos</span>
             </div>
           </Link>
 
@@ -159,13 +161,6 @@ function AdminNav() {
       {/* Itens Mobile */}
       {isOpen && (
         <div className="md:hidden px-6 pb-4 flex flex-col gap-4">
-          <Link href="/admin/create_itens">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <PlusCircleIcon className="h-5 w-5 text-blue-500" />
-              <span className="text-sm text-gray-700">Criar Produto</span>
-            </div>
-          </Link>
-
           <Link href="/admin/list_itens">
             <div className="flex items-center gap-2 cursor-pointer">
               <TvIcon className="h-5 w-5 text-blue-500" />
@@ -173,17 +168,17 @@ function AdminNav() {
             </div>
           </Link>
 
-          <Link href="/admin/create_user">
-            <div className="flex items-center gap-2 cursor-pointer">
-              <PlusCircleIcon className="h-5 w-5 text-blue-500" />
-              <span className="text-sm text-gray-700">Criar Usuário</span>
-            </div>
-          </Link>
-
           <Link href="/admin/list_users">
             <div className="flex items-center gap-2 cursor-pointer">
               <UserIcon className="h-5 w-5 text-blue-500" />
               <span className="text-sm text-gray-700">Gerenciar Usuários</span>
+            </div>
+          </Link>
+
+          <Link href="/admin/list_orders">
+            <div className="flex items-center gap-2 cursor-pointer">
+              <CurrencyDollarIcon className="h-5 w-5 text-blue-500" />
+              <span className="text-sm text-gray-700">Gerenciar Pedidos</span>
             </div>
           </Link>
 

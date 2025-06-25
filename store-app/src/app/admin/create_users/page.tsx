@@ -1,6 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
 
 export default function CreateUserPage() {
   const [formData, setFormData] = useState({
@@ -65,6 +67,7 @@ export default function CreateUserPage() {
   return (
     <section className="max-w-4xl mx-auto p-10">
       <h1 className="text-3xl font-bold mb-8">Criar novo Usuário</h1>
+
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
         <input
@@ -136,7 +139,7 @@ export default function CreateUserPage() {
         <button
           type="submit"
           disabled={loading}
-          className={`border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50
+          className={`flex items-center gap-2 cursor-pointer p-3 mb-4 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50
           }`}
         >
           {loading ? "Enviando..." : "Criar Usuário"}
